@@ -7,7 +7,7 @@
     <style>
         body { background: #fffaf0; font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
         .quiz-card { background: white; padding: 40px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); text-align: center; max-width: 450px; width: 90%; border: 2px solid #ffcad4; }
-        h2 { color: #4a4a4a; font-size: 1.4rem; margin-bottom: 25px; }
+        h2 { color: #4a4a4a; font-size: 1.4rem; margin-bottom: 25px; min-height: 60px; }
         .options { display: flex; flex-direction: column; gap: 15px; }
         button { background: #ff9a9e; color: white; border: none; padding: 15px; border-radius: 15px; cursor: pointer; font-size: 16px; font-weight: 600; transition: 0.3s; }
         button:hover { background: #ff6b6b; transform: translateY(-3px); }
@@ -47,6 +47,7 @@
         <div class="options" id="options-bin">
             <button onclick="handleQuiz()">Find the ML immediately</button>
             <button onclick="handleQuiz()">Avoid the plot & stay rich</button>
+            <button onclick="handleQuiz()">Panic & find the Villainess</button>
         </div>
     </div>
 
@@ -76,12 +77,27 @@
         function handleQuiz() {
             if (step === 1) music.play();
             step++;
+
             if (step === 2) {
-                qText.innerText = "Round 2: Which trope is superior: 'Enemies to Lovers' or 'Hidden Identity'?";
+                qText.innerText = "Round 2: Which ML trope makes you kick your feet the most?";
+                optionsBin.innerHTML = `
+                    <button onclick="handleQuiz()">The Obsessive Yandere</button>
+                    <button onclick="handleQuiz()">The Golden Retriever Boy</button>
+                    <button onclick="handleQuiz()">The Cold Duke of the North</button>
+                `;
             } else if (step === 3) {
-                qText.innerText = "Round 3: If you could save one 'Second Lead' from heartbreak, who would it be?";
+                qText.innerText = "Round 3: If you were the Villainess, what would be your signature hobby?";
+                optionsBin.innerHTML = `
+                    <button onclick="handleQuiz()">Drinking Tea & Plotting</button>
+                    <button onclick="handleQuiz()">Buying the whole Jewelry shop</button>
+                    <button onclick="handleQuiz()">Training with the Sword</button>
+                `;
             } else if (step === 4) {
-                qText.innerText = "Round 4: A 10/10 story with bad art, or 4/10 story with Solo Leveling tier art?";
+                qText.innerText = "Round 4: Better Ending: A Grand Royal Wedding or Running away together?";
+                optionsBin.innerHTML = `
+                    <button onclick="handleQuiz()">Grand Royal Wedding</button>
+                    <button onclick="handleQuiz()">Secret Escape to the Countryside</button>
+                `;
             } else if (step === 5) {
                 quizContainer.style.display = "none";
                 boringScreen.style.display = "flex";
@@ -93,7 +109,7 @@
             quizContainer.style.display = "block";
             qText.innerText = "Let's find your Soulmate. What's the personality of your ideal ML?";
             optionsBin.innerHTML = `
-                <input type="text" placeholder="e.g. Cold, soft for her, obsessive..." style="padding: 15px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px;">
+                <input type="text" placeholder="e.g. Protective, Soft, Tall..." style="padding: 15px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; width: 80%;">
                 <button onclick="finalTrap()">Generate Result</button>
             `;
         }
@@ -102,20 +118,17 @@
             qText.innerText = "Soulmate Found! Check the name in the preview box below to see who it is.";
             optionsBin.innerHTML = `
                 <div style="width: 250px; height: 120px; background: #f0f0f0; margin: 10px auto; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center;">
-                    <span style="font-size: 2px; color: #bbb; letter-spacing: 0.5px;">RUN AWAY NOW</span>
+                    <span style="font-size: 2px; color: #bbb; letter-spacing: 0.5px;">SYSTEM MALFUNCTION</span>
                 </div>
                 <p style="font-size: 11px; color: #888;">Name is blurred for mystery. Lean in to see the text.</p>
             `;
             
             setTimeout(() => {
                 music.pause();
-                
-                // Audio starts exactly at 0.7 seconds
-                scream.currentTime = 0.7; 
+                scream.currentTime = 0.7; // Start exactly at 0.7s
                 scream.play(); 
-                
                 overlay.style.display = "flex"; 
-            }, 6000); // 6 second delay for maximum focus
+            }, 6000);
         }
     </script>
 </body>
