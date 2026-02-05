@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Manhwa Soulmate Finder</title>
+    <style>
+        body { background: #fffaf0; font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        .quiz-card { background: white; padding: 40px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); text-align: center; max-width: 450px; width: 90%; border: 2px solid #ffcad4; }
+        h2 { color: #4a4a4a; font-size: 1.4rem; margin-bottom: 25px; }
+        .options { display: flex; flex-direction: column; gap: 15px; }
+        button { background: #ff9a9e; color: white; border: none; padding: 15px; border-radius: 15px; cursor: pointer; font-size: 16px; font-weight: 600; transition: 0.3s; }
+        button:hover { background: #ff6b6b; transform: translateY(-3px); }
+        
+        #boring-screen { display: none; position: fixed; inset: 0; background: #fff; z-index: 100; justify-content: center; align-items: center; flex-direction: column; text-align: center; }
+        #boring-screen h1 { font-size: 2.2rem; color: #ff5252; }
+
+        /* The Ghost Image Overlay */
+        #jumpscare-overlay { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: black; 
+            z-index: 9999; 
+            justify-content: center; 
+            align-items: center;
+        }
+        #jumpscare-overlay img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            animation: shake 0.1s infinite, zoom 0.5s ease-in;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(2px, 2px); }
+            50% { transform: translate(-2px, -2px); }
+            100% { transform: translate(2px, -2px); }
+        }
+        @keyframes zoom {
+            from { transform: scale(0.8); }
+            to { transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-card" id="quiz-container">
+        <h2 id="question">Round 1: If you woke up as the FL in your last read Manhwa, what's your first move?</h2>
+        <div class="options" id="options-bin">
+            <button onclick="handleQuiz()">Find the ML immediately</button>
+            <button onclick="handleQuiz()">Avoid the plot & stay rich</button>
+        </div>
+    </div>
+
+    <div id="boring-screen">
+        <h1>Is the game boring? HAHA! 😜</h1>
+        <p>You're actually putting effort into this... Cute.</p>
+        <button style="background: #4834d4;" onclick="startPassionPart()">Fine, let's get serious</button>
+    </div>
+
+    <div id="jumpscare-overlay">
+        <img src="ghost.jpg" alt="BOO!">
+    </div>
+
+    <audio id="buildup-audio" src="ratsasan.mp3" loop></audio>
+    <audio id="scream-audio" src="scream.mp3"></audio>
+
+    <script>
+        let step = 1;
+        const qText = document.getElementById('question');
+        const optionsBin = document.getElementById('options-bin');
+        const quizContainer = document.getElementById('quiz-container');
+        const boringScreen = document.getElementById('boring-screen');
+        const overlay = document.getElementById('jumpscare-overlay');
+        const music = document.getElementById('buildup-audio');
+        const scream = document.getElementById('scream-audio');
+
+        function handleQuiz() {
+            if (step === 1) music.play();
+            step++;
+
+            if (step === 2) {
+                qText.innerText = "Round 2: Which trope is superior: 'Enemies to Lovers' or 'Hidden Identity'?";
+            } else if (step === 3) {
+                qText.innerText = "Round 3: If you could save one 'Second Lead' from heartbreak, who would it be?";
+            } else if (step === 4) {
+                qText.innerText = "Round 4: A 10/10 story with bad art, or 4/10 story with Solo Leveling tier art?";
+            } else if (step === 5) {
+                quizContainer.style.display = "none";
+                boringScreen.style.display = "flex";
+            }
+        }
+
+        function startPassionPart() {
+            boringScreen.style.display = "none";
+            quizContainer.style.display = "block";
+            qText.innerText = "Let's find your Soulmate. What's the personality of your ideal ML?";
+            optionsBin.innerHTML = `
+                <input type="text" placeholder="e.g. Cold, soft for her, obsessive..." style="padding: 15px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px;">
+                <button onclick="finalTrap()">Generate Result</button>
+            `;
+        }
+
+        function finalTrap() {
+            qText.innerText = "Soulmate Found! Check the name in the preview box below to see who it is.";
+            optionsBin.innerHTML = `
+                <div style="width: 250px; height: 120px; background: #f0f0f0; margin: 10px auto; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 2px; color: #bbb; letter-spacing: 0.5px;">RUN AWAY NOW</span>
+                </div>
+                <p style="font-size: 11px; color: #888;">Name is blurred for mystery. Lean in to see the text.</p>
+            `;
+            
+            setTimeout(() => {
+                music.pause();
+                scream.play(); // Play the loud scream
+                overlay.style.display = "flex"; // Show the ghost image
+            }, 6000);
+        }
+    </script>
+</body>
+</html>
+
