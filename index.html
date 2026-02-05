@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,6 @@
         #boring-screen { display: none; position: fixed; inset: 0; background: #fff; z-index: 100; justify-content: center; align-items: center; flex-direction: column; text-align: center; }
         #boring-screen h1 { font-size: 2.2rem; color: #ff5252; }
 
-        /* The Ghost Image Overlay */
         #jumpscare-overlay { 
             display: none; 
             position: fixed; 
@@ -27,17 +26,17 @@
         }
         #jumpscare-overlay img { 
             width: 100%; height: 100%; object-fit: cover; 
-            animation: shake 0.1s infinite, zoom 0.5s ease-in;
+            animation: shake 0.1s infinite, zoom 0.3s ease-in;
         }
 
         @keyframes shake {
-            0% { transform: translate(2px, 2px); }
-            50% { transform: translate(-2px, -2px); }
-            100% { transform: translate(2px, -2px); }
+            0% { transform: translate(3px, 3px); }
+            50% { transform: translate(-3px, -3px); }
+            100% { transform: translate(3px, -3px); }
         }
         @keyframes zoom {
-            from { transform: scale(0.8); }
-            to { transform: scale(1.2); }
+            from { transform: scale(0.7); }
+            to { transform: scale(1.1); }
         }
     </style>
 </head>
@@ -77,7 +76,6 @@
         function handleQuiz() {
             if (step === 1) music.play();
             step++;
-
             if (step === 2) {
                 qText.innerText = "Round 2: Which trope is superior: 'Enemies to Lovers' or 'Hidden Identity'?";
             } else if (step === 3) {
@@ -111,11 +109,14 @@
             
             setTimeout(() => {
                 music.pause();
-                scream.play(); // Play the loud scream
-                overlay.style.display = "flex"; // Show the ghost image
-            }, 6000);
+                
+                // Audio starts exactly at 0.7 seconds
+                scream.currentTime = 0.7; 
+                scream.play(); 
+                
+                overlay.style.display = "flex"; 
+            }, 6000); // 6 second delay for maximum focus
         }
     </script>
 </body>
 </html>
-
